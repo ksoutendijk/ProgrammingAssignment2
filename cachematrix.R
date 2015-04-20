@@ -1,7 +1,7 @@
-## Put comments here that give an overall description of what your
-## functions do
+## These Function create a special kind of matrix which solves its inverse and save the results to cache
 
-## Write a short comment describing this function
+
+## The function provides a list of functions that set, get, set the solution or save the solution to cache
 
 makeCacheMatrix <- function(x = matrix()) {
   m <- NULL
@@ -10,25 +10,26 @@ makeCacheMatrix <- function(x = matrix()) {
     m <<- NULL
   }
   get <- function() x
-  setmean <- function(mean) m <<- mean
-  getmean <- function() m
+  setsolve <- function(solve) m <<- solve
+  getsolve <- function() m
   list(set = set, get = get,
-       setmean = setmean,
-       getmean = getmean)
+       setsolve = setsolve,
+       getsolve = getsolve)
 }
 
 
-## Write a short comment describing this function
+## This function accepts the above function as an argument and returnes the cached solution or calculates a solution if one does not exist
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-  m <- x$getmean()
+  m <- x$getsolve()
   if(!is.null(m)) {
     message("getting cached data")
     return(m)
   }
+  message("solving and saving to cache")
   data <- x$get()
-  m <- mean(data, ...)
-  x$setmean(m)
+  m <- solve(data, ...)
+  x$setsolve(m)
   m
 }
